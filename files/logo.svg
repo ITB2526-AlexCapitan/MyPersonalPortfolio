@@ -1,0 +1,10 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Fondo Squircle (Forma Apple) -->
+    <rect x="0.5" y="0.5" width="39" height="39" rx="10" fill="#1c1c1e" stroke="#333333"/>
+    
+    <!-- Símbolo > (Prompt) en Azul Accent -->
+    <path d="M12 28L20 20L12 12" stroke="#2997ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Símbolo _ (Cursor) en Blanco -->
+    <line x1="22" y1="28" x2="28" y2="28" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+</svg>

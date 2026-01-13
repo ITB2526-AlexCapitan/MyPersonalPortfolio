@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../files/logo.svg">
+    <title>Minecraft Server</title>
+    <style>
+        /* --- VARIABLES GLOBALES (Idénticas) --- */
+        :root {
+            --bg-color: #000000;
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent: #2997ff;
+            --card-bg: rgba(22, 22, 23, 0.8);
+            --code-bg: #1e1e1e; /* Ligeramente más oscuro para terminal */
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+        body { background-color: var(--bg-color); color: var(--text-primary); overflow-x: hidden; line-height: 1.6; }
+
+        /* --- Navigation (Idéntico) --- */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        .nav-container { max-width: 980px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .logo { font-weight: 600; font-size: 1.2rem; letter-spacing: -0.5px; color: var(--text-primary); text-decoration: none; transition: opacity 0.3s ease; }
+        .logo:hover { opacity: 0.8; }
+        .back-link { color: var(--accent); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; transition: opacity 0.3s ease; }
+        .back-link:hover { opacity: 0.8; }
+
+        /* --- Layout Principal --- */
+        main { padding-top: 140px; padding-bottom: 100px; width: 100%; }
+        article { max-width: 720px; margin: 0 auto; padding: 0 20px; } /* Un poco más ancho para la terminal */
+
+        /* --- HERO SECTION (DISEÑO INTOCABLE - IDÉNTICO A PROJECT 1) --- */
+        .project-hero { margin-bottom: 60px; text-align: center; opacity: 0; animation: fadeIn 1s ease forwards; }
+        
+        .kicker { color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem; font-weight: 600; margin-bottom: 15px; display: block; }
+        
+        h1 { font-size: 3rem; font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 20px; background: linear-gradient(180deg, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .hero-summary { font-size: 1.25rem; color: var(--text-secondary); font-weight: 400; line-height: 1.5; margin-bottom: 30px; }
+        
+        .metadata { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        
+        .meta-tag { font-size: 0.8rem; padding: 6px 14px; background: rgba(255, 255, 255, 0.1); border-radius: 20px; color: var(--text-primary); border: 1px solid var(--border-color); }
+
+        /* --- CONTENT VARIATIONS (DISEÑO DIFERENTE PARA EL CUERPO) --- */
+        
+        .content-block { opacity: 0; animation: slideUp 0.8s ease forwards 0.3s; }
+        
+        h2 { font-size: 1.8rem; margin-top: 60px; margin-bottom: 25px; color: var(--text-primary); letter-spacing: -0.5px; }
+        p { color: var(--text-secondary); margin-bottom: 24px; font-size: 1.05rem; }
+
+        /* Variación 1: Grid de Características en lugar de lista */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .feature-title { color: var(--text-primary); font-weight: 600; margin-bottom: 8px; display: block; }
+        .feature-desc { font-size: 0.9rem; color: var(--text-secondary); margin: 0; line-height: 1.4; }
+
+        /* Variación 2: Ventana de Terminal en lugar de bloque de código simple */
+        .terminal-window {
+            background: #101010;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 40px 0;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            font-family: 'Menlo', 'Monaco', monospace;
+        }
+
+        .terminal-header {
+            background: #1c1c1e;
+            padding: 10px 15px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .terminal-body { padding: 20px; font-size: 0.85rem; color: #d4d4d4; line-height: 1.5; }
+        .cmd { color: var(--accent); }
+        .arg { color: #a6e22e; } /* Verde para argumentos */
+        .comment { color: #75715e; font-style: italic; }
+
+        /* Variación 3: Fila de Estadísticas (Horizontal) en lugar de Grid 2x2 */
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-item { text-align: center; flex: 1; border-right: 1px solid var(--border-color); }
+        .stat-item:last-child { border-right: none; }
+
+        .stat-val { display: block; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 5px; }
+        .stat-key { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Footer */
+        footer { text-align: center; padding: 60px 0; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.8rem; margin-top: 80px; }
+
+        /* Animations */
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .stats-row { flex-direction: column; gap: 30px; }
+            .stat-item { border-right: none; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
+            .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">Alex Capitán</a>
+            <a href="../projects.html" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Projects
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <!-- 
+               HERO: Mismo diseño exacto que Project 1
+               CONTENIDO: Texto actualizado según tus instrucciones
+            -->
+            <header class="project-hero">
+                <span class="kicker">Systems Administration</span>
+                <h1>Linux-Based Minecraft Server</h1>
+                <p class="hero-summary">
+                    Self-hosted high-performance Minecraft server running on Ubuntu Server. Configured via CLI with a focus on resource allocation, automated backups, and network security.
+                </p>
+                <div class="metadata">
+                    <span class="meta-tag">Ubuntu Server</span>
+                    <span class="meta-tag">CLI</span>
+                    <span class="meta-tag">Java</span>
+                    <span class="meta-tag">Recommended</span>
+                </div>
+            </header>
+
+            <div class="content-block">
+                
+                <!-- Sección 1: El Problema/Objetivo -->
+                <section>
+                    <h2>The Objective</h2>
+                    <p>Commercial hosting solutions often suffer from "shared resource" latency or limit access to critical startup parameters. To support a local community with complex mod-packs and farms, I needed a dedicated environment with <strong>full root access</strong> and zero overhead.</p>
+                </section>
+
+                <!-- Sección 2: Implementación (Diseño Diferente: Cards + Terminal) -->
+                <section>
+                    <h2>Implementation Strategy</h2>
+                    <p>The infrastructure relies on a headless Ubuntu Server instance. By eschewing a GUI, I ensured that every megabyte of RAM is prioritized for the Java Virtual Machine (JVM).</p>
+
+                    <!-- Feature Cards (Variación visual) -->
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <span class="feature-title">Resource Allocation</span>
+                            <p class="feature-desc">Tuned JVM garbage collection using Aikar's flags to minimize latency spikes (lag) during world saving.</p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-title">Automated Backups</span>
+                            <p class="feature-desc">Custom Bash scripts running via Cron to compress world data and push it to off-site storage daily.</p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-title">Network Security</span>
+                            <p class="feature-desc">Strict <code>ufw</code> firewall rules and whitelist management to prevent unauthorized access.</p>
+                        </div>
+                    </div>
+
+                    <p>Server management is handled strictly via SSH. Below represents the optimized startup configuration used to maximize throughput.</p>
+                    
+                    <!-- Terminal Window (Variación visual) -->
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                        <div class="terminal-body">
+                            <div><span class="cmd">admin@server:~$</span> ./start.sh</div>
+                            <br>
+                            <div class="comment"># JVM flags optimized for low-latency GC</div>
+                            <div>
+                                <span class="cmd">java</span> -Xms8G -Xmx8G <br>
+                                <span class="arg">-XX:+UseG1GC</span> <br>
+                                <span class="arg">-XX:+ParallelRefProcEnabled</span> <br>
+                                <span class="arg">-XX:MaxGCPauseMillis=200</span> <br>
+                                -jar server.jar nogui
+                            </div>
+                            <br>
+                            <div><span class="cmd">[INFO]</span> Starting minecraft server version 1.20.4</div>
+                            <div><span class="cmd">[INFO]</span> Preparing level "world"</div>
+                            <div><span class="cmd">[INFO]</span> Done (4.205s)! For help, type "help"</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sección 3: Networking & Stats (Diseño Diferente: Fila horizontal) -->
+                <section>
+                    <h2>Networking & Security</h2>
+                    <p>Exposing a server to the internet requires diligence. I implemented port forwarding strictly for TCP/UDP 25565 on the router, while <code>fail2ban</code> monitors SSH logs to ban IPs attempting brute-force attacks.</p>
+                    
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <span class="stat-val">99.9%</span>
+                            <span class="stat-key">Uptime</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-val">&lt; 20ms</span>
+                            <span class="stat-key">Avg Latency</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-val">0</span>
+                            <span class="stat-key">Security Incidents</span>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Alex Capitán. Designed with love.</p>
+    </footer>
+
+    <script>
+        // Reveal animation logic
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Apply to new elements (feature-grid, terminal, stats-row)
+        document.querySelectorAll('.feature-grid, .terminal-window, .stats-row, h2').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.8s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
