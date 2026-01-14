@@ -4,7 +4,7 @@
 
 > A high-performance, minimalist personal portfolio designed for a Systems Administrator. Featuring a clean **Apple-inspired UI**, interactive **3D elements**, and a fully responsive layout.
 
-🔗 **[View Live Demo](https://itb2526-alexcapitan.github.io/MyPersonalPortfolio/)**
+🔗 **[View Live Demo](https://alexcapitan.github.io/portfolio)** *(Replace with your actual link)*
 
 ---
 
